@@ -1,4 +1,3 @@
-// AddChannelButton.js
 import React, { useState } from "react";
 import styled from "styled-components";
 import { TextField } from "@mui/material";
@@ -11,20 +10,23 @@ import CustomModal from "../CustomModal/CustomModal";
 const AddChannelContainer = styled.div`
   display: flex;
   align-items: center;
-  padding-left: 2px;
+  padding: 12px 24px;
   cursor: pointer;
-  position: relative;
-  justify-content: space-between;
-  width: 100%;
+  background-color: #e0c3fc;
+  border-radius: 6px;
+  margin: 10px 0;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #d1b2f1;
+  }
 `;
 
 const SidebarOptionChannel = styled.h3`
-  padding: 10px 20px;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 16px;
-  display: flex;
-  align-items: center;
-  color: #333;
+  color: #4a4a4a;
+  margin: 0;
 `;
 
 function AddChannelButton() {
@@ -62,7 +64,7 @@ function AddChannelButton() {
     <>
       <AddChannelContainer onClick={handleOpenAddChannelModal}>
         <SidebarOptionChannel>
-          Add Channel
+          + Add Channel
         </SidebarOptionChannel>
       </AddChannelContainer>
       <CustomModal />

@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Avatar } from "@mui/material";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import AddChannelButton from "../AddChannelButton/AddChannelButton";
 import AddIcon from "@mui/icons-material/Add";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp"; 
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import SidebarOption from "../SidebarOption/SidebarOption";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { auth, db } from "../../firebase";
@@ -92,22 +93,7 @@ const SidebarOptionsContainer = styled.div`
   overflow-y: auto;
 `;
 
-const AddChannelButton = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  margin-top: 20px;
-  background-color: #e0c3fc;
-  color: #333;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s;
 
-
-  > .MuiSvgIcon-root {
-    margin-right: 15%;
-  }
-`;
 
 function Sidebar({ isOpen }) {
   const [user] = useAuthState(auth);
@@ -123,7 +109,7 @@ function Sidebar({ isOpen }) {
         </HeaderTop>
         <SidebarInfo>
           <div>
-            <h2>Chat Channels</h2>
+            <h2>All Chat Channels</h2>
             <h3>{user.displayName}</h3>
           </div>
           <ExitToAppIcon
@@ -135,9 +121,7 @@ function Sidebar({ isOpen }) {
 
       <SidebarOptionsContainer>
         <SidebarOption Icon={PeopleAltIcon} title="Channels" />
-        <AddChannelButton>
-          <SidebarOption Icon={AddIcon} title="Add Channel" addChannelOption />
-        </AddChannelButton>
+        <AddChannelButton />
 
         {channels?.docs.map((doc) => (
           <SidebarOption key={doc.id} title={doc.data().name} id={doc.id} />

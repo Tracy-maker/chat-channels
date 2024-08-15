@@ -121,7 +121,7 @@ function SidebarOption({ Icon, title, id, addChannelOption }) {
     <>
       <SidebarOptionContainer 
         onClick={addChannelOption ? () => {} : selectChannel} 
-        $addChannel={addChannelOption}
+        addChannel={addChannelOption}
       >
         {Icon && <Icon fontSize="small" style={{ padding: 10 }} />}
         <SidebarOptionChannel>
