@@ -1,46 +1,46 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { IconButton, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { db } from "../../firebase";
-import { doc, updateDoc, deleteDoc, addDoc, collection } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { enterRoom } from "../../features/appSlice";
-import CustomModal from "../CustomModal/CustomModal"; 
+import CustomModal from "../CustomModal/CustomModal";
 import { closeModal, openModal } from "../../features/modalSlice";
+import { db } from "../../firebase";
 
 const SidebarOptionContainer = styled.div`
   display: flex;
-  font-size: 16px; 
   align-items: center;
-  padding-left: 2px;
+  padding: 10px 20px;
   cursor: pointer;
-  position: relative;
   justify-content: space-between;
+  border-radius: 4px;
+  margin: 5px 0;
 
-  :hover {
-    opacity: 0.9;
-    width: 100%;
-  }
-
+  
   > h3 {
     font-weight: 500;
-    font-size: 19px; 
+    font-size: 16px;
     flex: 1;
+    display: flex;
+    align-items: center;
   }
 
   > h3 > span {
-    padding: 18px;
+    margin-right: 10px;
   }
 `;
 
+
 const SidebarOptionChannel = styled.h3`
-  padding: 10px;
-  font-weight: 300;
-  font-size: 16px;
+  padding: 0;
+  font-weight: 400;
+  font-size: 15px;
   display: flex;
   align-items: center;
+  color: #333;
 `;
 
 const EditDeleteContainer = styled.div`
@@ -49,42 +49,19 @@ const EditDeleteContainer = styled.div`
 `;
 
 const CustomIconButton = styled(IconButton)`
-  padding: 6px;  /* Smaller padding for a sleeker look */
-  color: #666;  /* Match the icon color with the overall theme */
-  
-  &:hover {
-    background-color: transparent;  /* Remove hover background */
-    color: #333;  /* Slightly darken the icon on hover */
-  }
+  padding: 4px;
+  color: #666;
+
+
 `;
 
 function SidebarOption({ Icon, title, id, addChannelOption }) {
   const dispatch = useDispatch();
-  const [channelName, setChannelName] = useState(title);
 
   const handleOpenModal = (type) => {
     let config = {};
 
     switch (type) {
-      case "add":
-        config = {
-          title: "Add New Channel",
-          content: (
-            <TextField
-              autoFocus
-              margin="dense"
-              label="Channel Name"
-              type="text"
-              fullWidth
-              value={channelName}
-              onChange={(e) => setChannelName(e.target.value)}
-            />
-          ),
-          actionLabel: "Add",
-          onAction: handleAddChannel,
-        };
-        break;
-
       case "edit":
         config = {
           title: "Edit Channel",
@@ -95,12 +72,10 @@ function SidebarOption({ Icon, title, id, addChannelOption }) {
               label="Channel Name"
               type="text"
               fullWidth
-              value={channelName}
-              onChange={(e) => setChannelName(e.target.value)}
             />
           ),
           actionLabel: "Save",
-          onAction: handleEditChannel,
+          onAction: () => handleEditChannel(),
         };
         break;
 
@@ -109,7 +84,7 @@ function SidebarOption({ Icon, title, id, addChannelOption }) {
           title: "Delete Channel",
           content: `Are you sure you want to delete the channel "${title}"?`,
           actionLabel: "Delete",
-          onAction: handleDeleteChannel,
+          onAction: () => handleDeleteChannel(),
         };
         break;
 
@@ -117,21 +92,14 @@ function SidebarOption({ Icon, title, id, addChannelOption }) {
         break;
     }
 
-    dispatch(openModal(config)); 
-  };
-
-  const handleAddChannel = async () => {
-    if (channelName) {
-      await addDoc(collection(db, "rooms"), { name: channelName });
-      dispatch(closeModal()); 
-    }
+    dispatch(openModal(config));
   };
 
   const handleEditChannel = async () => {
-    if (channelName && id) {
+    if (id) {
       const channelRef = doc(db, "rooms", id);
-      await updateDoc(channelRef, { name: channelName });
-      dispatch(closeModal()); 
+      await updateDoc(channelRef, { name: title });
+      dispatch(closeModal());
     }
   };
 
@@ -139,7 +107,7 @@ function SidebarOption({ Icon, title, id, addChannelOption }) {
     if (id) {
       const channelRef = doc(db, "rooms", id);
       await deleteDoc(channelRef);
-      dispatch(closeModal()); 
+      dispatch(closeModal());
     }
   };
 
@@ -151,10 +119,13 @@ function SidebarOption({ Icon, title, id, addChannelOption }) {
 
   return (
     <>
-      <SidebarOptionContainer onClick={addChannelOption ? () => handleOpenModal("add") : selectChannel}>
+      <SidebarOptionContainer 
+        onClick={addChannelOption ? () => {} : selectChannel} 
+        $addChannel={addChannelOption}
+      >
         {Icon && <Icon fontSize="small" style={{ padding: 10 }} />}
         <SidebarOptionChannel>
-          <span>#</span>
+          {(!addChannelOption && title !== "Channels") && <span>#</span>}
           {title}
         </SidebarOptionChannel>
         {!addChannelOption && title !== "Channels" && (

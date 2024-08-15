@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Avatar } from "@mui/material";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import AddIcon from "@mui/icons-material/Add";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp"; // Import the logout icon
+import ExitToAppIcon from "@mui/icons-material/ExitToApp"; 
 import SidebarOption from "../SidebarOption/SidebarOption";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { auth, db } from "../../firebase";
@@ -33,7 +33,7 @@ const SidebarHeader = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background-color: #e0c3fc;
+  background-color: #bb7ef5;
   border-bottom: 1px solid #ccc;
 `;
 
@@ -103,9 +103,6 @@ const AddChannelButton = styled.div`
   border-radius: 4px;
   transition: background-color 0.3s;
 
-  &:hover {
-    background-color: #d1b2f1;
-  }
 
   > .MuiSvgIcon-root {
     margin-right: 15%;
