@@ -12,7 +12,7 @@ function CustomModal() {
   };
 
   return (
-    <Dialog open={isOpen} onClose={handleClose}>
+    <Dialog open={isOpen} onClose={handleClose} maxWidth="md" fullWidth={true}>
     <DialogTitle>{title}</DialogTitle>
     <DialogContent>{content}</DialogContent>
     <DialogActions>
