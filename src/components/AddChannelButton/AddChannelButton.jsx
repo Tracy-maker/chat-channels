@@ -10,15 +10,17 @@ import CustomModal from "../CustomModal/CustomModal";
 const AddChannelContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 12px 24px;
+  padding: 20px 24px;
   cursor: pointer;
-  background-color: #e0c3fc;
+  background-color: #dbbbf8;
   border-radius: 6px;
   margin: 10px 0;
   transition: background-color 0.3s ease;
+  align-items:center;
+  justify-content:center;
 
   &:hover {
-    background-color: #d1b2f1;
+    background-color: white;
   }
 `;
 

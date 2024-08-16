@@ -13,34 +13,27 @@ import { db } from "../../firebase";
 const SidebarOptionContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  padding: 12px 24px;
   cursor: pointer;
   justify-content: space-between;
-  border-radius: 4px;
-  margin: 5px 0;
+  border-radius: 6px;
+  margin: 8px 0;
+  background-color: ${(props) => (props.$addChannel ? "#f5f5f5" : "transparent")};
 
-  
-  > h3 {
-    font-weight: 500;
-    font-size: 16px;
-    flex: 1;
-    display: flex;
-    align-items: center;
-  }
-
-  > h3 > span {
-    margin-right: 10px;
+  &:hover {
+    background-color: #e0e0e0;
   }
 `;
 
-
 const SidebarOptionChannel = styled.h3`
-  padding: 0;
-  font-weight: 400;
-  font-size: 15px;
+  font-weight: 500;
+  font-size: 16px;
   display: flex;
   align-items: center;
   color: #333;
+  letter-spacing: 1.5px;
+  text-transform: capitalize;
+  flex: 1;
 `;
 
 const EditDeleteContainer = styled.div`
@@ -51,8 +44,6 @@ const EditDeleteContainer = styled.div`
 const CustomIconButton = styled(IconButton)`
   padding: 4px;
   color: #666;
-
-
 `;
 
 function SidebarOption({ Icon, title, id, addChannelOption }) {
@@ -119,21 +110,27 @@ function SidebarOption({ Icon, title, id, addChannelOption }) {
 
   return (
     <>
-      <SidebarOptionContainer 
-        onClick={addChannelOption ? () => {} : selectChannel} 
-        addChannel={addChannelOption}
+      <SidebarOptionContainer
+        onClick={addChannelOption ? () => {} : selectChannel}
+        $addChannel={addChannelOption}
       >
-        {Icon && <Icon fontSize="small" style={{ padding: 10 }} />}
+        {Icon && <Icon fontSize="small" style={{ marginRight: 12 }} />}
         <SidebarOptionChannel>
-          {(!addChannelOption && title !== "Channels") && <span>#</span>}
           {title}
         </SidebarOptionChannel>
-        {!addChannelOption && title !== "Channels" && (
+     
+        {!addChannelOption && title !== "All the Channels" && (
           <EditDeleteContainer>
-            <CustomIconButton onClick={() => handleOpenModal("edit")} size="small">
+            <CustomIconButton
+              onClick={() => handleOpenModal("edit")}
+              size="small"
+            >
               <EditIcon />
             </CustomIconButton>
-            <CustomIconButton onClick={() => handleOpenModal("delete")} size="small">
+            <CustomIconButton
+              onClick={() => handleOpenModal("delete")}
+              size="small"
+            >
               <DeleteIcon />
             </CustomIconButton>
           </EditDeleteContainer>
