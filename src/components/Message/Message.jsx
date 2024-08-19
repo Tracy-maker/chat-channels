@@ -9,17 +9,45 @@ const MessageContainer = styled.div`
   > img {
     height: 50px;
     border-radius: 8px;
+
+    @media (max-width: 480px) {
+      height: 40px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 15px;
   }
 `;
 
 const MessageInfo = styled.div`
   padding-left: 10px;
 
-  > h4 > span {
-    color: gray;
-    font-weight: 300;
-    margin-left: 10px;
-    font-size: 10px;
+  > h4 {
+    font-size: 16px;
+
+    > span {
+      color: gray;
+      font-weight: 300;
+      margin-left: 10px;
+      font-size: 10px;
+
+      @media (max-width: 480px) {
+        font-size: 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      font-size: 14px;
+    }
+  }
+
+  > p {
+    font-size: 14px;
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+    }
   }
 `;
 

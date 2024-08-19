@@ -6,13 +6,13 @@ import AddChannelButton from "../AddChannelButton/AddChannelButton";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import SidebarOption from "../SidebarOption/SidebarOption";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { auth, db } from "../../firebase";
+import { auth, db } from "../../firebase"   ;
 import { collection } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 
 const SidebarContainer = styled.div`
-  flex: 0.25;
+  width: 25%;
   background-color: #f7f1ff;
   height: 100vh;
   display: flex;
@@ -25,7 +25,7 @@ const SidebarContainer = styled.div`
     z-index: 999;
     transform: ${({ $isOpen }) =>
       $isOpen ? "translateX(0)" : "translateX(-100%)"};
-    width: 70%;
+    width: 66%;
   }
 `;
 
