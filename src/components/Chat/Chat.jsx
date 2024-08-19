@@ -8,6 +8,7 @@ import { db } from "../../firebase";
 import { collection, doc, orderBy, query } from "firebase/firestore";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import ChatInput from "../ChatInput/ChatInput";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 const ChatContainer = styled.div`
   flex: 0.7;
@@ -39,10 +40,36 @@ const HeaderLeft = styled.div`
   }
 `;
 
-
 const ChatBottom = styled.div`
   padding-bottom: 200px;
 `;
+
+const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const ErrorMessage = styled.h2`
+  font-size: 24px;
+  color: #555;
+  margin-top: 16px;
+`;
+
+const ErrorDescription = styled.p`
+  font-size: 16px;
+  color: #888;
+  margin-top: 8px;
+`;
+
 
 function Chat() {
   const chatRef = useRef(null);
@@ -57,6 +84,26 @@ function Chat() {
     chatRef?.current?.scrollIntoView({ behavior: "smooth" });
   }, [roomId, loading]);
 
+  if (!roomId) {
+    return (
+      <ErrorContainer>
+        <ErrorOutlineIcon style={{ fontSize: 50, color: "#888" }} />
+        <ErrorMessage>No Channel Selected</ErrorMessage>
+        <ErrorDescription>Please choose a channel to start chatting.</ErrorDescription>
+      </ErrorContainer>
+    );
+  }
+
+  if (!roomDetails) {
+    return (
+      <ErrorContainer>
+        <ErrorOutlineIcon style={{ fontSize: 50, color: "#888" }} />
+        <ErrorMessage>Channel Not Found</ErrorMessage>
+        <ErrorDescription>The selected channel does not exist.</ErrorDescription>
+      </ErrorContainer>
+    );
+  }
+
   return (
     <ChatContainer>
       {roomDetails && roomMessage && (
@@ -64,7 +111,7 @@ function Chat() {
           <Header>
             <HeaderLeft>
               <h4>
-                <strong># {roomDetails?.data().name}</strong>
+                <strong># {roomDetails?.data()?.name || "unknown"}</strong>
               </h4>
               <StarBorderOutlinedIcon />
             </HeaderLeft>
@@ -90,7 +137,7 @@ function Chat() {
           <ChatInput
             chatRef={chatRef}
             channelId={roomId}
-            channelName={roomDetails?.data().name}
+            channelName={roomDetails?.data()?.name || "unknown"}
           />
         </>
       )}

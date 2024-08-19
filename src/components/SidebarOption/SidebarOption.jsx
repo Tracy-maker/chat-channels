@@ -1,14 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { IconButton, TextField } from "@mui/material";
+import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { enterRoom } from "../../features/appSlice";
+import { openModal } from "../../features/modalSlice";
 import CustomModal from "../CustomModal/CustomModal";
-import { closeModal, openModal } from "../../features/modalSlice";
-import { db } from "../../firebase";
 
 const SidebarOptionContainer = styled.div`
   display: flex;
@@ -49,57 +47,26 @@ const CustomIconButton = styled(IconButton)`
 function SidebarOption({ Icon, title, id, addChannelOption }) {
   const dispatch = useDispatch();
 
-  const handleOpenModal = (type) => {
-    let config = {};
-
-    switch (type) {
-      case "edit":
-        config = {
-          title: "Edit Channel",
-          content: (
-            <TextField
-              autoFocus
-              margin="dense"
-              label="Channel Name"
-              type="text"
-              fullWidth
-            />
-          ),
-          actionLabel: "Save",
-          onAction: () => handleEditChannel(),
-        };
-        break;
-
-      case "delete":
-        config = {
-          title: "Delete Channel",
-          content: `Are you sure you want to delete the channel "${title}"?`,
-          actionLabel: "Delete",
-          onAction: () => handleDeleteChannel(),
-        };
-        break;
-
-      default:
-        break;
-    }
-
-    dispatch(openModal(config));
+  const openEditModal = () => {
+    dispatch(
+      openModal({
+        title: "Edit Channel",
+        actionLabel: "Save",
+        defaultValue: title, 
+        id: id, 
+      })
+    );
   };
 
-  const handleEditChannel = async () => {
-    if (id) {
-      const channelRef = doc(db, "rooms", id);
-      await updateDoc(channelRef, { name: title });
-      dispatch(closeModal());
-    }
-  };
-
-  const handleDeleteChannel = async () => {
-    if (id) {
-      const channelRef = doc(db, "rooms", id);
-      await deleteDoc(channelRef);
-      dispatch(closeModal());
-    }
+  const openDeleteModal = () => {
+    dispatch(
+      openModal({
+        title: "Delete Channel",
+        actionLabel: "Delete",
+        defaultValue: title, 
+        id: id, 
+      })
+    );
   };
 
   const selectChannel = () => {
@@ -111,26 +78,18 @@ function SidebarOption({ Icon, title, id, addChannelOption }) {
   return (
     <>
       <SidebarOptionContainer
-        onClick={addChannelOption ? () => {} : selectChannel}
+        onClick={addChannelOption ? null : selectChannel}
         $addChannel={addChannelOption}
       >
         {Icon && <Icon fontSize="small" style={{ marginRight: 12 }} />}
-        <SidebarOptionChannel>
-          {title}
-        </SidebarOptionChannel>
-     
+        <SidebarOptionChannel>{title}</SidebarOptionChannel>
+
         {!addChannelOption && title !== "All the Channels" && (
           <EditDeleteContainer>
-            <CustomIconButton
-              onClick={() => handleOpenModal("edit")}
-              size="small"
-            >
+            <CustomIconButton onClick={openEditModal} size="small">
               <EditIcon />
             </CustomIconButton>
-            <CustomIconButton
-              onClick={() => handleOpenModal("delete")}
-              size="small"
-            >
+            <CustomIconButton onClick={openDeleteModal} size="small">
               <DeleteIcon />
             </CustomIconButton>
           </EditDeleteContainer>
