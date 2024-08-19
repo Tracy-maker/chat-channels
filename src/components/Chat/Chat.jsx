@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import Message from "../Message/Message";
-
 import { useSelector } from "react-redux";
 import { selectRoomId } from "../../features/appSlice";
 import { db } from "../../firebase";

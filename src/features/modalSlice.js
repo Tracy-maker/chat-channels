@@ -3,9 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isOpen: false,
   title: "",
-  content: null,
+  contentType: "",
+  contentData: null,
   actionLabel: "",
-  onAction: null,
+  actionType: "",
 };
 
 export const modalSlice = createSlice({
@@ -15,16 +16,18 @@ export const modalSlice = createSlice({
     openModal: (state, action) => {
       state.isOpen = true;
       state.title = action.payload.title;
-      state.content = action.payload.content;
+      state.contentType = action.payload.contentType; 
+      state.contentData = action.payload.contentData || null; 
       state.actionLabel = action.payload.actionLabel;
-      state.onAction = action.payload.onAction;
+      state.actionType = action.payload.actionType; 
     },
     closeModal: (state) => {
       state.isOpen = false;
       state.title = "";
-      state.content = null;
+      state.contentType = "";
+      state.contentData = null;
       state.actionLabel = "";
-      state.onAction = null;
+      state.actionType = "";
     },
   },
 });

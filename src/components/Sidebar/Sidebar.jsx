@@ -23,8 +23,8 @@ const SidebarContainer = styled.div`
   @media (max-width: 768px) {
     position: fixed;
     z-index: 999;
-    transform: ${({ isOpen }) =>
-      isOpen ? "translateX(0)" : "translateX(-100%)"};
+    transform: ${({ $isOpen }) =>
+      $isOpen ? "translateX(0)" : "translateX(-100%)"};
     width: 70%;
   }
 `;
@@ -112,7 +112,7 @@ function Sidebar({ isOpen }) {
   });
 
   return (
-    <SidebarContainer isOpen={isOpen}>
+    <SidebarContainer $isOpen={isOpen}>
       <SidebarHeader>
         <HeaderTop>
           <HeaderAvatar alt={user?.displayName} src={user?.photoURL} />

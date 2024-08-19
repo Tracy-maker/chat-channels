@@ -17,15 +17,29 @@ const ChatInputContainer = styled.div`
   > form > input {
     position: fixed;
     bottom: 30px;
-    width: 60%;
+    width: 50%;
     border: 1px solid gray;
     border-radius: 3px;
     padding: 20px;
     outline: none;
+    margin-right: 5%;
   }
 
   > form > button {
-    display: none !important;
+    position: fixed;
+    right: 11%; 
+    bottom: 3.7%;
+    background-color: #4caf50; 
+    color: white; 
+    padding: 15px 20px; 
+    border: none; 
+    border-radius: 3px; 
+    cursor: pointer;
+    transition: background-color 0.3s; 
+
+    &:hover {
+      background-color: #45a049; 
+    }
   }
 `;
 
@@ -63,7 +77,7 @@ function ChatInput({ channelId, channelName, chatRef }) {
             setInput(e.target.value);
           }}
         />
-        <Button hidden type="submit" onClick={sendMessage}>
+        <Button type="submit" onClick={sendMessage}>
           SEND
         </Button>
       </form>

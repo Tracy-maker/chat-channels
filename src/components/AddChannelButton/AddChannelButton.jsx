@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { TextField } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../firebase";
-import { closeModal, openModal } from "../../features/modalSlice";
-import CustomModal from "../CustomModal/CustomModal";
+import { openModal } from "../../features/modalSlice";
 
 const AddChannelContainer = styled.div`
   display: flex;
@@ -16,8 +12,7 @@ const AddChannelContainer = styled.div`
   border-radius: 6px;
   margin: 10px 0;
   transition: background-color 0.3s ease;
-  align-items:center;
-  justify-content:center;
+  justify-content: center;
 
   &:hover {
     background-color: white;
@@ -33,44 +28,20 @@ const SidebarOptionChannel = styled.h3`
 
 function AddChannelButton() {
   const dispatch = useDispatch();
-  const [channelName, setChannelName] = useState("");
-
-  const handleAddChannel = async () => {
-    if (channelName) {
-      await addDoc(collection(db, "rooms"), { name: channelName });
-      dispatch(closeModal());
-    }
-  };
 
   const handleOpenAddChannelModal = () => {
-    const config = {
-      title: "Add New Channel",
-      content: (
-        <TextField
-          autoFocus
-          margin="dense"
-          label="Channel Name"
-          type="text"
-          fullWidth
-          value={channelName}
-          onChange={(e) => setChannelName(e.target.value)}
-        />
-      ),
-      actionLabel: "Add",
-      onAction: handleAddChannel,
-    };
-    dispatch(openModal(config));
+    dispatch(
+      openModal({
+        title: "Add New Channel",
+        actionLabel: "Add",
+      })
+    );
   };
 
   return (
-    <>
-      <AddChannelContainer onClick={handleOpenAddChannelModal}>
-        <SidebarOptionChannel>
-          + Add Channel
-        </SidebarOptionChannel>
-      </AddChannelContainer>
-      <CustomModal />
-    </>
+    <AddChannelContainer onClick={handleOpenAddChannelModal}>
+      <SidebarOptionChannel>+ Add Channel</SidebarOptionChannel>
+    </AddChannelContainer>
   );
 }
 

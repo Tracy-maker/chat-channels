@@ -18,7 +18,7 @@ const MessageInfo = styled.div`
   > h4 > span {
     color: gray;
     font-weight: 300;
-    margin-left: 4px;
+    margin-left: 10px;
     font-size: 10px;
   }
 `;
