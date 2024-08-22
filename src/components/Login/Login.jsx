@@ -9,7 +9,7 @@ const LoginContainer = styled.div`
   height: 100vh;
   display: grid;
   place-items: center;
-  padding: 20px; // Add some padding for smaller screens
+  padding: 20px;
 `;
 
 const LoginInnerContainer = styled.div`
@@ -34,31 +34,31 @@ const LoginInnerContainer = styled.div`
 
   // Media query for mobile devices
   @media (max-width: 768px) {
-    padding: 50px; // Reduce padding on smaller screens
-    width: 100%; // Make the inner container take up full width
-    border-radius: 5px; // Reduce border radius for smaller screens
+    padding: 50px;
+    width: 100%;
+    border-radius: 5px;
 
     > img {
-      height: 80px; // Reduce image size on mobile
-      margin-bottom: 20px; // Reduce margin on mobile
+      height: 80px;
+      margin-bottom: 20px;
     }
 
     > button {
-      margin-top: 30px; // Reduce button margin on mobile
-    }
-  }
-
-  @media (max-width: 480px) {
-    padding: 30px; // Further reduce padding on very small screens
-    width: 90%; // Allow some breathing room on the sides
-
-    > img {
-      height: 60px; // Further reduce image size on very small screens
-      margin-bottom: 10px; // Reduce margin on very small screens
+      margin-top: 30px;
     }
 
-    > button {
-      margin-top: 20px; // Reduce button margin on very small screens
+    @media (max-width: 480px) {
+      padding: 30px;
+      width: 90%;
+
+      > img {
+        height: 60px;
+        margin-bottom: 10px;
+      }
+
+      > button {
+        margin-top: 20px;
+      }
     }
   }
 `;
